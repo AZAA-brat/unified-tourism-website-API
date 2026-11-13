@@ -6,6 +6,7 @@ class Hotel(models.Model):
     description = models.TextField()
     website = models.URLField()
     email = models.EmailField()
+    address = models.CharField(max_length=100)
 
     def __str__(self):
         return self.name
@@ -21,3 +22,20 @@ class Photo(models.Model):
 
     def __str__(self):
         return self.caption
+
+class Phone(models.Model):
+    LABELS = [
+        ("reception", "Reception"),
+        ("reservation", "Reservation"),
+    ]
+
+    hotel = models.ForeignKey(
+        Hotel,
+        on_delete=models.CASCADE,
+        related_name="phones"
+    )
+    label = models.CharField(max_length=30, choices=LABELS)
+    phone_number = models.CharField(max_length=30)
+
+    def __str__(self):
+        return self.numbers
