@@ -1,7 +1,21 @@
 from django.db import models
 
+class City(models.Model):
+    name = models.CharField(max_length=100)
+
+    class Meta:
+        verbose_name = "city"
+        verbose_name_plural = "cities"
+
+    def __str__(self):
+        return self.name
 
 class Hotel(models.Model):
+    city = models.ForeignKey(
+        City,
+        on_delete=models.PROTECT,
+        related_name="hotels"
+    )
     name = models.CharField(max_length=200)
     description = models.TextField()
     website = models.URLField()
